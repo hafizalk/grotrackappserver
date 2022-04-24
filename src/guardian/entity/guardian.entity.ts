@@ -6,6 +6,7 @@ import {
   Unique,
   BeforeInsert,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Student } from './student.entity';
@@ -31,7 +32,8 @@ export class Guardian extends BaseEntity {
   @Column()
   contactNumber: string;
 
-  @OneToMany((type) => Student, (student) => student.guardianId)
+  @OneToMany(() => Student, (student) => student.guardian)
+  @JoinColumn({ name: "studentId" })
   students: Student[];
   
   @BeforeInsert()  async hashPassword() {

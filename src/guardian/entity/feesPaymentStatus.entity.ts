@@ -5,19 +5,18 @@ import {
   Column,
   Unique,
   BeforeInsert,
+  ManyToOne,
 } from 'typeorm';
+import { Student } from './student.entity';
 
 @Entity()
-@Unique(['studentId', 'academicYear'])
+@Unique(['statusId', 'academicYear'])
 export class FeesPaymentStatus extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column()
-  guardianId: string;
-
-  @Column()
-  studentId: string;
+  statusId: string;
+  
+  @ManyToOne(() => Student, (student) => student.status)
+  student: Student;
 
   @Column()
   termOneStatus: boolean;
