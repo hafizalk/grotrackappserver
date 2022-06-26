@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddStudentsDto } from 'src/guardian/dto/addstudents-dto';
 import { GuardianService } from 'src/guardian/guardian.service';
@@ -18,27 +18,39 @@ export class StudentService {
 
 
     async addStudentForGuardian(addStudents: AddStudentsDto): Promise<OperationStatus> {
-        let status: OperationStatus = {
-            success: true,   
-            message: 'Successfully saved students for Parent/Guardian: '.concat(addStudents.email),
-            };
-        const guardian = await this.guardianService.findOneGuardian(addStudents.email);
-        console.log("Guardian ".concat(guardian.email))
+        let status: OperationStatus = null;
+        
         try{
+            const guardian = await this.guardianService.findOneGuardian(addStudents.email);
+            if (!guardian) {
+                throw new HttpException('Parent/Guardian with following details does not exist: '.concat(guardian.email), HttpStatus.BAD_REQUEST);    
+            }
             for (const student of addStudents.students) {
                 student.guardian = guardian;
-                this.saveStudent(student);
+                await this.saveStudent(student);
+            };
+            status = {
+                success: true,
+                message: 'Successfully saved students for Parent/Guardian: '.concat(addStudents.email),
+                httpStatus: HttpStatus.CREATED
             };
         }
         catch(err){
+            var errorStatus: HttpStatus;
+            if(err instanceof HttpException){
+                errorStatus = HttpStatus[HttpStatus[parseInt(err.getStatus().toString())]];
+            }
+            else{
+                errorStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            }
             status = {
-                success: false, 
-                message: "Error saving student for parent with details: ".concat(addStudents.email).concat(err),
+                success: false,
+                message: "Error saving students for parent with details: ".concat(addStudents.email).concat(" ").concat(err),
+                httpStatus: errorStatus
             };    
         }
 
         return status;
-
     }
 
     async findAllStudents(): Promise<Student[]> {
@@ -62,6 +74,11 @@ export class StudentService {
     }
     
     async saveStudent(student: Student): Promise<void> {
+        // check if the student exists in the db    
+        const studentInDb = await this.findOneStudentWithName(student.firstName, student.surname);
+        if (studentInDb) {
+            throw new HttpException('Student already exists', HttpStatus.BAD_REQUEST);    
+        }
         await this.studentRepository.save(student);
     }
 }

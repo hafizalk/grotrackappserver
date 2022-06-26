@@ -1,3 +1,4 @@
+import { HttpStatus } from "@nestjs/common";
 import { UserDetailsDto } from "src/guardian/dto/userdetails-dto";
 import { Guardian } from "src/guardian/entity/guardian.entity";
 
@@ -18,9 +19,16 @@ export interface JwtPayload {  email: string; guardianId: string;}
 export interface OperationStatus {  
     success: boolean;  
     message: string;
+    httpStatus: HttpStatus;
 }
 
 export interface LoginStatus {  
     email: string;  
     token: any;
+}
+
+export declare enum TermEnum {
+    Term1 = 1,
+    Term2 = 2,
+    Term3 = 3
 }

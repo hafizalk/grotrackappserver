@@ -30,7 +30,7 @@ export class Student extends BaseEntity {
   guardian: Guardian;
 
 
-  @OneToMany((type) => FeesPaymentStatus, (status) => status.student)
+  @OneToMany(() => FeesPaymentStatus, (status) => status.student)
   @JoinColumn({ name: "statusId" })
   status: FeesPaymentStatus[];
 }
