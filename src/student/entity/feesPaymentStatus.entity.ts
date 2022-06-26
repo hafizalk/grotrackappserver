@@ -1,3 +1,4 @@
+import { TermEnum } from 'src/shared/helper';
 import {
   BaseEntity,
   Entity,
@@ -9,7 +10,7 @@ import {
 import { Student } from './student.entity';
 
 @Entity()
-@Unique(['statusId', 'academicYear'])
+@Unique(['term', 'student'])
 export class FeesPaymentStatus extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   statusId: string;
@@ -18,13 +19,10 @@ export class FeesPaymentStatus extends BaseEntity {
   student: Student;
 
   @Column()
-  termOneStatus: boolean;
-  
-  @Column()
-  termTwoStatus: boolean;
+  term: TermEnum;
 
   @Column()
-  termThreeStatus: boolean;
+  paymentStatus: Boolean;
 
   @Column()
   academicYear: String;

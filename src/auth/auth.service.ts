@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthCredDto } from 'src/guardian/dto/auth-cred-dto';
 import { CreateUserDto } from 'src/guardian/dto/newuser-dto';
@@ -18,15 +18,24 @@ export class AuthService {
 
     async signUp(userDto: CreateUserDto): Promise<OperationStatus> {
         let status: OperationStatus = {
-        success: true,   
-        message: 'Successfully registered user',
+            success: true,   
+            message: 'Successfully registered user',
+            httpStatus: HttpStatus.CREATED
         };
         try {
             await this.guardianService.createNewUser(userDto);
         } catch (err) {
+            var httpStatus: HttpStatus;
+            if(err instanceof HttpException){
+                httpStatus = HttpStatus[HttpStatus[parseInt(err.getStatus.toString())]];
+            }
+            else{
+                httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            }
             status = {
                 success: false, 
                 message: "Error registering user: ".concat(err),
+                httpStatus: httpStatus
             };    
         }
         return status;  

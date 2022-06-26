@@ -12,7 +12,7 @@ export class AuthController {
     public async signUp(@Body() createUserDto: CreateUserDto,  ): Promise<OperationStatus> {    
         const result: OperationStatus = await this.authService.signUp(createUserDto);
         if (!result.success) {
-            throw new HttpException(result.message, HttpStatus.BAD_REQUEST);    
+            throw new HttpException(result.message, result.httpStatus); 
         }
         return result;  
     }
