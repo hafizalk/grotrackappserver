@@ -1,5 +1,5 @@
 import { IsArray, IsEmail, IsNotEmpty, Matches, MaxLength, MinLength } from 'class-validator';
-import { Student } from '../entity/student.entity';
+import { Student } from 'src/student/entity/student.entity';
 export class CreateUserDto {  
     @IsNotEmpty() 
     @MinLength(8)

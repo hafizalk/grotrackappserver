@@ -5,7 +5,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule.forRoot({
+        isGlobal: true
+      })],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
@@ -16,6 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         database: configService.get('DATABASE_NAME'),
         entities: ['dist/**/*.entity.js'],
         synchronize: true,
+        migrationsRun: true
       }),
     }),
   ],

@@ -1,7 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { toUserDetailsDto } from 'src/shared/mapper';
+import { toUserDetailsDto } from 'src/shared/helper';
 import { Repository } from 'typeorm';
+import { AuthCredDto } from './dto/auth-cred-dto';
 import { CreateUserDto } from './dto/newuser-dto';
 import { UserDetailsDto } from './dto/userdetails-dto';
 import { Guardian } from './entity/guardian.entity';
@@ -31,13 +32,13 @@ export class GuardianService {
         await this.guardianRepository.save(guardian);
     }
 
-    async findByLogin(email: string, password: string): Promise<UserDetailsDto> {
+    async findByLogin(loginUser: AuthCredDto): Promise<UserDetailsDto> {
 
-        const guardian: Guardian = await this.findOneGuardian(email);
+        const guardian: Guardian = await this.findOneGuardian(loginUser.email);
 
         if (!guardian) return null;
 
-        const isValidPassword = await this.guardian.validatePassword(password, guardian.password);
+        const isValidPassword = await this.guardian.validatePassword(loginUser.password, guardian.password);
 
         console.log(isValidPassword);
 

@@ -5,8 +5,11 @@ import {
   Column,
   Unique,
   OneToMany,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
-import { FeesPaymentStatus } from './feesPaymentStatus.entity';
+import { Guardian } from 'src/guardian/entity/guardian.entity';
+import { FeesPaymentStatus } from './feespaymentstatus.entity';
 
 @Entity()
 @Unique(['firstName', 'surname'])
@@ -23,9 +26,11 @@ export class Student extends BaseEntity {
   @Column()
   dateOfBirth: Date;
 
-  @Column()
-  guardianId: string;
+  @ManyToOne(() => Guardian, (guardian) => guardian.students)
+  guardian: Guardian;
 
-  @OneToMany((type) => FeesPaymentStatus, (status) => status.studentId)
+
+  @OneToMany((type) => FeesPaymentStatus, (status) => status.student)
+  @JoinColumn({ name: "statusId" })
   status: FeesPaymentStatus[];
 }
