@@ -6,7 +6,6 @@ import { AuthCredDto } from './dto/auth-cred-dto';
 import { CreateUserDto } from './dto/newuser-dto';
 import { UserDetailsDto } from './dto/userdetails-dto';
 import { Guardian } from './entity/guardian.entity';
-import { Student } from './entity/student.entity';
 
 @Injectable()
 export class GuardianService {

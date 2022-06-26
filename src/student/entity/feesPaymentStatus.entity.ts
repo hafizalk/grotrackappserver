@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Unique,
-  BeforeInsert,
   ManyToOne,
 } from 'typeorm';
 import { Student } from './student.entity';

@@ -13,9 +13,9 @@ export const toUserDetailsDto = (guardian: Guardian): UserDetailsDto => {
     return user;
 };
 
-export interface JwtPayload {  email: string;}
+export interface JwtPayload {  email: string; guardianId: string;}
 
-export interface RegistrationStatus {  
+export interface OperationStatus {  
     success: boolean;  
     message: string;
 }

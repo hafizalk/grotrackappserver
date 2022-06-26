@@ -8,8 +8,8 @@ import {
   JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { FeesPaymentStatus } from './feesPaymentStatus.entity';
-import { Guardian } from './guardian.entity';
+import { Guardian } from 'src/guardian/entity/guardian.entity';
+import { FeesPaymentStatus } from './feespaymentstatus.entity';
 
 @Entity()
 @Unique(['firstName', 'surname'])
