@@ -1,34 +1,29 @@
-import { HttpStatus } from "@nestjs/common";
-import { UserDetailsDto } from "src/guardian/dto/userdetails-dto";
-import { Guardian } from "src/guardian/entity/guardian.entity";
+import { HttpStatus } from '@nestjs/common';
+import { UserDetailsDto } from 'src/user/dto/userdetails-dto';
+import { User } from 'src/user/entity/user.entity';
 
-export const toUserDetailsDto = (guardian: Guardian): UserDetailsDto => {  
-    const user = new UserDetailsDto();
-    user.email = guardian.email;
-    user.contactNumber = guardian.contactNumber;
-    user.firstName = guardian.firstName;
-    user.guardianId = guardian.guardianId;
-    user.surname = guardian.surname;
-    user.students = guardian.students;
+export const toUserDetailsDto = (user: User): UserDetailsDto => {
+  const userDto = new UserDetailsDto();
+  userDto.email = user.email;
+  userDto.firstName = user.firstName;
+  userDto.userId = user.userId;
+  userDto.surname = user.surname;
 
-    return user;
+  return userDto;
 };
 
-export interface JwtPayload {  email: string; guardianId: string;}
-
-export interface OperationStatus {  
-    success: boolean;  
-    message: string;
-    httpStatus: HttpStatus;
+export interface JwtPayload {
+  email: string;
+  userId: string;
 }
 
-export interface LoginStatus {  
-    email: string;  
-    token: any;
+export interface OperationStatus {
+  success: boolean;
+  message: string;
+  httpStatus: HttpStatus;
 }
 
-export declare enum TermEnum {
-    Term1 = 1,
-    Term2 = 2,
-    Term3 = 3
+export interface LoginStatus {
+  email: string;
+  token: any;
 }
