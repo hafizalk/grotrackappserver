@@ -9,7 +9,7 @@ import { AuthCredDto } from 'src/user/dto/auth-cred-dto';
 import { CreateUserDto } from 'src/user/dto/newuser-dto';
 import { UserDetailsDto } from 'src/user/dto/userdetails-dto';
 import { User } from 'src/user/entity/user.entity';
-import { UserService } from 'src/user/user.service';
+import { ShopListService } from 'src/user/user.service';
 import {
   JwtPayload,
   LoginStatus,
@@ -20,7 +20,7 @@ import {
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
+    private readonly shopListService: ShopListService,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -31,7 +31,7 @@ export class AuthService {
       httpStatus: HttpStatus.CREATED,
     };
     try {
-      await this.userService.createNewUser(userDto);
+      await this.shopListService.createNewUser(userDto);
     } catch (err) {
       var httpStatus: HttpStatus;
       if (err instanceof HttpException) {
@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   async validateUser(email: string): Promise<UserDetailsDto> {
-    const user: User = await this.userService.findOneUser(email);
+    const user: User = await this.shopListService.findOneUser(email);
 
     if (!user) {
       throw new HttpException('User does not exist', HttpStatus.BAD_REQUEST);
@@ -61,7 +61,7 @@ export class AuthService {
 
   async login(loginUser: AuthCredDto): Promise<LoginStatus> {
     // find user in db
-    const user = await this.userService.findByLogin(loginUser);
+    const user = await this.shopListService.findByLogin(loginUser);
     // generate and sign token
     const token = this._createToken(user);
 
