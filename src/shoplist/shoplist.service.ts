@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/user/entity/user.entity';
 import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { OperationStatus } from '../shared/helper';
@@ -67,28 +68,28 @@ export class ShopListService {
 
   async findOneShopListWithNameAndUserId(
     itemName: string,
-    userId: string,
+    user: User,
   ): Promise<ShopList> {
-    return this.shopListRepository.findOne({ where: { itemName, userId } });
+    return this.shopListRepository.findOne({ where: { itemName, user } });
   }
 
   async findOneShopListWithId(itemId: string): Promise<ShopList> {
     return this.shopListRepository.findOne({ where: { itemId } });
   }
 
-  async findShopListsForUserId(userId: string): Promise<ShopList[]> {
-    return this.shopListRepository.find({ where: { userId } });
+  async findShopListsForUserId(user: User): Promise<ShopList[]> {
+    return this.shopListRepository.find({ where: { user } });
   }
 
-  async deleteShopList(itemName: string, userId: string): Promise<void> {
-    await this.shopListRepository.delete([itemName, userId]);
+  async deleteShopList(itemId: string): Promise<void> {
+    await this.shopListRepository.delete(itemId);
   }
 
   async saveShopListItem(item: ShopList): Promise<void> {
     // check if the student exists in the db
     const itemExistsForUser = await this.findOneShopListWithNameAndUserId(
       item.itemName,
-      item.user.userId,
+      item.user,
     );
     if (itemExistsForUser) {
       throw new HttpException(

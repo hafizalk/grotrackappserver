@@ -10,7 +10,7 @@ import { OperationStatus } from 'src/shared/helper';
 import { AddShopListItemDto } from './dto/addshoplistitem-dto';
 import { ShopListService } from './shoplist.service';
 
-@Controller('student')
+@Controller('shoplist')
 @UseGuards(AuthGuard())
 export class ShopListController {
   constructor(private readonly studentService: ShopListService) {}

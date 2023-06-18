@@ -8,25 +8,29 @@ import {
   OneToMany,
   JoinColumn,
   ManyToOne,
+  PrimaryColumn,
 } from 'typeorm';
 
 @Entity()
 @Unique(['itemName', 'user'])
 export class ShopList extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  itemId: string;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   itemName: string;
-  
-  @Column()
-  surname: string;
 
   @Column()
-  puurchaseDate: Date;
+  purchaseDate: Date;
 
   @Column()
   restockDate: Date;
+
+  @Column()
+  itemBought: boolean;
+
+  @Column()
+  quantity: number;
 
   @ManyToOne(() => User, (user) => user.email)
   user: User;
