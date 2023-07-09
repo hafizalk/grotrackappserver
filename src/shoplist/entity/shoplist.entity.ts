@@ -2,11 +2,8 @@ import { User } from 'src/user/entity/user.entity';
 import {
   BaseEntity,
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   Unique,
-  OneToMany,
-  JoinColumn,
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';

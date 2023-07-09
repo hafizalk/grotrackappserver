@@ -85,8 +85,69 @@ export class ShopListService {
     await this.shopListRepository.delete(itemId);
   }
 
+  async removeShopListItem(id: string): Promise<OperationStatus> {
+    let status: OperationStatus = null;
+    try {
+      this.deleteShopList(id);
+      status = {
+        success: true,
+        message: 'Successfully saved shop list item for User',
+        httpStatus: HttpStatus.CREATED,
+      };
+    } catch (err) {
+      var errorStatus: HttpStatus;
+      if (err instanceof HttpException) {
+        errorStatus =
+          HttpStatus[HttpStatus[parseInt(err.getStatus().toString())]];
+      } else {
+        errorStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      status = {
+        success: false,
+        message: 'Error saving shop list item for user with details: '.concat(
+          err,
+        ),
+        httpStatus: errorStatus,
+      };
+    }
+    return status;
+  }
+
+  async updateItem(item: ShopList): Promise<OperationStatus> {
+    let status: OperationStatus = null;
+    try {
+      this.shopListRepository.update(item.id, {
+        purchaseDate: item.purchaseDate,
+        restockDate: item.restockDate,
+        itemBought: item.itemBought,
+        quantity: item.quantity,
+      });
+      status = {
+        success: true,
+        message: 'Successfully saved shop list item for User',
+        httpStatus: HttpStatus.CREATED,
+      };
+    } catch (err) {
+      var errorStatus: HttpStatus;
+      if (err instanceof HttpException) {
+        errorStatus =
+          HttpStatus[HttpStatus[parseInt(err.getStatus().toString())]];
+      } else {
+        errorStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+      }
+      status = {
+        success: false,
+        message: 'Error saving shop list item for user with details: '.concat(
+          err,
+        ),
+        httpStatus: errorStatus,
+      };
+    }
+    return status;
+  }
+
   async saveShopListItem(item: ShopList): Promise<void> {
-    // check if the student exists in the db
+    // check if the item exists in the db
     const itemExistsForUser = await this.findOneShopListWithNameAndUserId(
       item.itemName,
       item.user,
