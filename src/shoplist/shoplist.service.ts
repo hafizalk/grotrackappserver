@@ -81,6 +81,11 @@ export class ShopListService {
     return this.shopListRepository.find({ where: { user } });
   }
 
+  async findAllShopListItemsForUser(email: string): Promise<ShopList[]> {
+    const user: User = await this.userService.findOneUser(email);
+    return this.findShopListsForUserId(user);
+  }
+
   async deleteShopList(itemId: string): Promise<void> {
     await this.shopListRepository.delete(itemId);
   }

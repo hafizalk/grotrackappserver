@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { OperationStatus } from 'src/shared/helper';
@@ -32,8 +33,9 @@ export class ShopListController {
   }
 
   @Get('getshoplistitems')
-  public async getShopListItems(): Promise<ShopList[]> {
-    return this.shopListService.findAllShopLists();
+  public async getShopListItems(@Headers() headers): Promise<ShopList[]> {
+    let email = headers.userid;
+    return this.shopListService.findAllShopListItemsForUser(email);
   }
 
   @Post('updateshoplistitem')
