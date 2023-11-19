@@ -66,8 +66,9 @@ export class AuthService {
     const token = this._createToken(user);
 
     return {
-      username: user.email,
+      email: user.email,
       ...token,
+      username: user.firstName.concat(' ').concat(user.surname),
     };
   }
 

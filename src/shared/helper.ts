@@ -26,4 +26,5 @@ export interface OperationStatus {
 export interface LoginStatus {
   email: string;
   token: any;
+  username: string
 }

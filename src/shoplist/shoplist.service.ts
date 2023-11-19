@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entity/user.entity';
 import { UserService } from 'src/user/user.service';
-import { Repository } from 'typeorm';
+import { Repository, IsNull, Equal } from 'typeorm';
 import { OperationStatus } from '../shared/helper';
 import { AddShopListItemDto } from './dto/addshoplistitem-dto';
 import { ShopList } from './entity/shoplist.entity';
@@ -70,15 +70,15 @@ export class ShopListService {
     itemName: string,
     user: User,
   ): Promise<ShopList> {
-    return this.shopListRepository.findOne({ where: { itemName, user } });
+    return this.shopListRepository.findOne({ where: { itemName: itemName, user: Equal(user.userId) } });
   }
 
   async findOneShopListWithId(itemId: string): Promise<ShopList> {
-    return this.shopListRepository.findOne({ where: { itemId } });
+    return this.shopListRepository.findOne({ where: { id: itemId } });
   }
 
   async findShopListsForUserId(user: User): Promise<ShopList[]> {
-    return this.shopListRepository.find({ where: { user } });
+    return this.shopListRepository.find({ where: { user: Equal(user.userId) } });
   }
 
   async findAllShopListItemsForUser(email: string): Promise<ShopList[]> {
