@@ -13,6 +13,9 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   server: Server;
   private roomPlayerMap: Map<string, Map<string, number>> = new Map();
 
+  private roomLetterMap: Map<string, string> = new Map();
+
+
   handleConnection(client: Socket) {
     // Handle connection event
   }
@@ -34,20 +37,23 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
       const id = "ticktickroom".concat(uuidv4());
       client.join(id);
       this.roomPlayerMap.set(id, new Map<string, number>());
+      this.roomLetterMap.set(id, selectedLetter)
       this.server.emit('roomCreated', { room: id, selectedLetter });
     }
 
     @SubscribeMessage('joinGame')
     handleStartGame(@MessageBody() message: any, @ConnectedSocket() client: Socket): void {
 
+      let selectedLetter : string = this.roomLetterMap.get(message.roomId)
+
       if(this.roomPlayerMap.get(message.roomId) && this.roomPlayerMap.get(message.roomId).has(message.email)){
-        this.server.emit(message.roomId, {status: 'playerExists'});
+        this.server.emit(message.roomId, {status: 'playerExists', selectedLetter});
       }
       else{
         let roomPlayerResultMap = this.roomPlayerMap.get(message.roomId);
         roomPlayerResultMap.set(message.email, 0)
         this.roomPlayerMap.set(message.roomId, roomPlayerResultMap);
-        this.server.emit(message.roomId, {status: 'playerJoined'});
+        this.server.emit(message.roomId, {status: 'playerJoined', selectedLetter});
       }
     }
 

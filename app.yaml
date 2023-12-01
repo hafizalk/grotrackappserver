@@ -1,0 +1,12 @@
+runtime: nodejs18
+
+env_variables:
+  DATABASE_HOST: "localhost"
+  DATABASE_PORT: 3306
+  DATABASE_USERNAME: "root"
+  DATABASE_PASSWORD: "GroTrack2023"
+  DATABASE_NAME: "grotrackdb"
+  SECRETKEY: :GroTrack2023"
+  EXPIRESIN: "600s"
+
+services: grotrackserver
