@@ -18,8 +18,7 @@ import { EventsGateway } from './events/events.gateway';
     AuthModule,
     ShopListModule,
     ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: `${process.env.NODE_ENV}.env`
+      isGlobal: true
     }),
     ScheduleModule.forRoot(),
     SchedulerModule,

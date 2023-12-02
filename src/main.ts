@@ -6,6 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(9000);
+  const port = Number(process.env.PORT) || 9000;
+  await app.listen(port);
 }
 bootstrap();
