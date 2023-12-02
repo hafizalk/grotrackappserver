@@ -35,4 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # Prevent Commit of .env file
-.env
+*.env
