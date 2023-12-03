@@ -29,6 +29,9 @@ export class ShopList extends BaseEntity {
   @Column()
   quantity: number;
 
+  @Column()
+  restockReminderDays: number;
+
   @ManyToOne(() => User, (user) => user.email)
   user: User;
 }
