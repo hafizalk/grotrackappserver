@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as fs from 'fs';
 
 @Module({
   imports: [
@@ -16,7 +15,6 @@ import * as fs from 'fs';
         extra: {
             socketPath: configService.get('INSTANCE_UNIX_SOCKET')
        },
-        //port: configService.get('DATABASE_PORT'),
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),

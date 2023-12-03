@@ -10,6 +10,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { SchedulerModule } from './scheduler/scheduler.module';
 import { EventsModule } from './events/events.module';
 import { EventsGateway } from './events/events.gateway';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -23,6 +24,12 @@ import { EventsGateway } from './events/events.gateway';
     ScheduleModule.forRoot(),
     SchedulerModule,
     EventsModule,
+    MailerModule.forRoot({
+      transport: 'smtps://user@domain.com:pass@smtp.domain.com',
+      defaults: {
+        from: '"Do Not Reply" <lok8.noreply@gmail.com>',
+      }
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
