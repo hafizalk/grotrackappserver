@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { toUserDetailsDto } from 'src/shared/helper';
+import { toUserDetailsDto } from './../shared/helper';
 import { Repository } from 'typeorm';
 import { AuthCredDto } from './dto/auth-cred-dto';
 import { CreateUserDto } from './dto/newuser-dto';

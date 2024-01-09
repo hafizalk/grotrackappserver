@@ -5,9 +5,9 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { AuthCredDto } from 'src/user/dto/auth-cred-dto';
-import { CreateUserDto } from 'src/user/dto/newuser-dto';
-import { LoginStatus, OperationStatus } from 'src/shared/helper';
+import { AuthCredDto } from './../user/dto/auth-cred-dto';
+import { CreateUserDto } from './../user/dto/newuser-dto';
+import { LoginStatus, OperationStatus } from './../shared/helper';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -18,9 +18,8 @@ export class AuthController {
   public async signUp(
     @Body() createUserDto: CreateUserDto,
   ): Promise<OperationStatus> {
-    const result: OperationStatus = await this.authService.signUp(
-      createUserDto,
-    );
+    const result: OperationStatus =
+      await this.authService.signUp(createUserDto);
     if (!result.success) {
       throw new HttpException(result.message, result.httpStatus);
     }

@@ -10,7 +10,7 @@ import {
   Headers,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { OperationStatus } from 'src/shared/helper';
+import { OperationStatus } from './../shared/helper';
 import { AddShopListItemDto } from './dto/addshoplistitem-dto';
 import { ShopList } from './entity/shoplist.entity';
 import { ShopListService } from './shoplist.service';

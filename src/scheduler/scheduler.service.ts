@@ -1,10 +1,10 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { ShopList } from 'src/shoplist/entity/shoplist.entity';
-import { ShopListService } from 'src/shoplist/shoplist.service';
-import { User } from 'src/user/entity/user.entity';
-import { UserService } from 'src/user/user.service';
+import { ShopList } from './../shoplist/entity/shoplist.entity';
+import { ShopListService } from './../shoplist/shoplist.service';
+import { User } from './../user/entity/user.entity';
+import { UserService } from './../user/user.service';
 
 @Injectable()
 export class SchedulerService {
@@ -19,6 +19,11 @@ export class SchedulerService {
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   handleDailyMidnightCron() {
     this.logger.debug('Called every day at midnight');
+  }
+
+  @Cron(CronExpression.EVERY_10_SECONDS)
+  handleTenSecsCron() {
+    this.logger.debug('Called every 10 seconds');
   }
 
   @Cron(CronExpression.EVERY_DAY_AT_8AM)

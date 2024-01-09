@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ShopListModule } from 'src/shoplist/shoplist.module';
+import { ShopListModule } from './../shoplist/shoplist.module';
 import { SchedulerService } from './scheduler.service';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from './../user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({

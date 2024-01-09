@@ -9,7 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { ShopList } from 'src/shoplist/entity/shoplist.entity';
+import { ShopList } from './../../shoplist/entity/shoplist.entity';
 
 @Entity()
 @Unique(['email'])

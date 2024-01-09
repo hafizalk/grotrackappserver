@@ -1,11 +1,22 @@
 runtime: nodejs18
 env_variables:
-  DATABASE_HOST: "35.189.96.189"
+  DATABASE_HOST: 172.16.48.3
   DATABASE_PORT: 3306
-  DATABASE_USERNAME: "root"
-  DATABASE_PASSWORD: "X@HcgA5@R}R3o#5;"
-  DATABASE_NAME: "grotrackdb"
-  SECRETKEY: :GroTrack2023"
+  DATABASE_USERNAME: root
+  DATABASE_PASSWORD: H5jyoq)|9K2#c6HD
+  DATABASE_NAME: grotrackdb
+  SECRETKEY: GroTrack2023"
+  NODE_ENV: prod
   EXPIRESIN: "600s"
   INSTANCE_UNIX_SOCKET: /cloudsql/grotrack-app:europe-west2:grotrack-db
-services: grotrackserver
+  DB_ROOT_CERT: certs/server-ca.pem
+  DB_CERT: certs/client-cert.pem
+  DB_KEY: certs/client-key.pem
+  PRIVATE_IP: TRUE
+  NO_REPLY_PASS: "jzbr kppq mhnd mucq"
+automatic_scaling:
+  min_idle_instances: 1
+inbound_services:
+- warmup
+vpc_access_connector:
+  name: projects/grotrack-app/locations/europe-west2/connectors/grotrackapp-connector

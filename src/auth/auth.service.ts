@@ -5,17 +5,17 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthCredDto } from 'src/user/dto/auth-cred-dto';
-import { CreateUserDto } from 'src/user/dto/newuser-dto';
-import { UserDetailsDto } from 'src/user/dto/userdetails-dto';
-import { User } from 'src/user/entity/user.entity';
+import { AuthCredDto } from './../user/dto/auth-cred-dto';
+import { CreateUserDto } from './../user/dto/newuser-dto';
+import { UserDetailsDto } from './../user/dto/userdetails-dto';
+import { User } from './../user/entity/user.entity';
 import {
   JwtPayload,
   LoginStatus,
   OperationStatus,
   toUserDetailsDto,
-} from 'src/shared/helper';
-import { UserService } from 'src/user/user.service';
+} from './../shared/helper';
+import { UserService } from './../user/user.service';
 
 @Injectable()
 export class AuthService {

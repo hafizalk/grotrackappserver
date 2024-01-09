@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
-import { UserDetailsDto } from 'src/user/dto/userdetails-dto';
-import { User } from 'src/user/entity/user.entity';
+import { UserDetailsDto } from './../user/dto/userdetails-dto';
+import { User } from './../user/entity/user.entity';
 
 export const toUserDetailsDto = (user: User): UserDetailsDto => {
   const userDto = new UserDetailsDto();
@@ -26,5 +26,5 @@ export interface OperationStatus {
 export interface LoginStatus {
   email: string;
   token: any;
-  username: string
+  username: string;
 }
