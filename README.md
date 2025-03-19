@@ -1,2 +1,2 @@
-# zenithschoolwebsiteserver
-Nestjs server for School Website
+# grotrackappserver
+Nestjs server for grotrackapp
